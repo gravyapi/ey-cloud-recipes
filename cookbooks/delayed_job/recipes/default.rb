@@ -19,6 +19,13 @@ if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:na
       end
     end
     
+  
+    #  hardwire to 4 workers regardless of instance size.
+    #
+    worker_count = 4
+    #
+    #
+    
     worker_count.times do |count|
       template "/etc/monit.d/delayed_job#{count+1}.#{app_name}.monitrc" do
         source "dj.monitrc.erb"
