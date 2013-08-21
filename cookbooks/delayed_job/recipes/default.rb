@@ -22,7 +22,7 @@ if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:na
   
     #  hardwire to 4 workers regardless of instance size.
     #
-    worker_count = 4
+    # worker_count = 4
     #
     #
     
