@@ -2,16 +2,16 @@
 # Cookbook Name:: delayed_job
 # Recipe:: default
 #
-
-if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:name] !~ /^(mongodb|redis|memcache)/)
+if node[:instance_role] == "util" && node[:name] == /^(delay_|delayed_|dj_)/)
+#if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:name] !~ /^(mongodb|redis|memcache)/)
   node[:applications].each do |app_name,data|
   
     # determine the number of workers to run based on instance size
     if node[:instance_role] == 'solo'
-      worker_count = 0 #don't run delayed job on main instance
+      worker_count = 1
     else
       case node[:ec2][:instance_type]
-      when 'm1.small' then worker_count = 4   #jobs aren't that compute intensive -- can handle 4 at a time.
+      when 'm1.small' then worker_count = 4   #jobs for this product aren't that compute intensive -- can handle 4 at a time.
       when 'c1.medium' then worker_count = 4
       when 'c1.xlarge' then worker_count = 8
       else 
