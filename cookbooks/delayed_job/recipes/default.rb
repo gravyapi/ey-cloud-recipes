@@ -2,7 +2,7 @@
 # Cookbook Name:: delayed_job
 # Recipe:: default
 #
-if (node[:instance_role] == "util" && node[:name] == /^(delay_|delayed_|dj_)/)
+if (node[:instance_role] == "util" && node[:name] =~ /^(delay_|delayed_|dj_)/)
 #if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:name] !~ /^(mongodb|redis|memcache)/)
   node[:applications].each do |app_name,data|
   
