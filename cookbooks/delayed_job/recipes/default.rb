@@ -8,10 +8,10 @@ if node[:instance_role] == "solo" || (node[:instance_role] == "util" && node[:na
   
     # determine the number of workers to run based on instance size
     if node[:instance_role] == 'solo'
-      worker_count = 1
+      worker_count = 0 #don't run delayed job on main instance
     else
       case node[:ec2][:instance_type]
-      when 'm1.small' then worker_count = 2
+      when 'm1.small' then worker_count = 4   #jobs aren't that compute intensive -- can handle 4 at a time.
       when 'c1.medium' then worker_count = 4
       when 'c1.xlarge' then worker_count = 8
       else 
